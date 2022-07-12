@@ -1,0 +1,191 @@
+version: "2.0"
+
+intents:
+- affirm
+- deny
+- express_gratitude
+- greet
+- goodbye
+- groceries
+- buy
+- add_to_cart
+- choice_additionalHelp
+- choice_noMoreHelp
+- choice_inform_about_eCommerce
+- faq
+# - choice_inform_about_product
+# - choice_suggest_product
+- bot_challenge
+- chitchat
+- out_of_scope
+- nlu_fallback
+
+
+slots:
+  # suggestedProduct:
+  #   type: text
+  #   influence_conversation: false
+  # searchedProducts:
+  #   type: text
+  #   influence_conversation: false
+  groceries:
+    type: text
+    influence_conversation: false
+  stock_amount:
+    type: float
+    influence_conversation: false
+  product_available:
+    type: bool
+    influence_conversation: true
+
+responses:
+  utter_welcome:
+  - text: Welcome to Sami Grocery Stores! What would you like to get? (Product Name Only)
+      # What would you like to get?
+      # For an efficient response, please reply with just the product's name.
+
+  # utter_request_validity:
+  # - text: For an efficient response, please reply with just the product's name
+
+  utter_confirm_request:
+  - text: Here is what you requested. *insert product image(link)
+
+  utter_action_verify_availability:
+  - text: This is a placeholder and should be an action.
+
+  utter_action_out_of_stock:
+  - text: Sorry, this item is currently not available
+
+  utter_action_recommend_product:
+  - text: No recommendations available.
+
+  utter_youre_welcome:
+  - text: You're welcome!
+
+  utter_goodbye:
+  - text: Good shopping on sami, see you soon!
+
+  utter_successful_purchase:
+  - text: "Your purchase is successful"
+
+  utter_added_to_cart:
+  - text: "Added to your cart"
+
+  utter_inform_about_company:
+  - text: Inform me about the company
+  utter_inform_about_product:
+  - text: Inform me about a product
+  utter_suggest_product:
+  - text: Suggest a product
+  
+  # utter_howCanIhelpYou:
+  # - buttons:
+  #   - payload: /choice_inform_about_eCommerce
+  #     title: Inform me about the company
+  #   - payload: /choice_inform_about_product
+  #     title: Inform me about a product
+  #   - payload: /choice_suggest_product
+  #     title: Suggest a product
+  #   text: 'Tell me which of these options would you like me to help you with:'
+
+  utter_howCanIhelpYou:
+  - text: How can I help you?
+
+  utter_inform_about_eCommerce:
+  - buttons:
+    - payload: General information
+      title: General information
+    - payload: About the creator
+      title: About the creator
+    - payload: Customer service number
+      title: Customer service number
+    - payload: Time of creation
+      title: Time of creation
+    text: What do you want to know exactly about the company?
+
+  utter_faq/eCommerce_info:
+  - text: sami is an ecommerce product recommending chatbot created by Samuel Nwabuike for his Bachelor's degree final project
+    
+  utter_faq/creator:
+  - text: The creator of this chatbot is Samuel Nwabuike. He is
+      currently finishing his first degree in Computer Science at Covenant University
+      
+  utter_faq/customer_service_number:
+  - text: The customer service number is +234 808 879 9405.
+  utter_faq/when_was_eCommerce_created:
+  - text: This chatbot was created in May 2022 
+  utter_ask_searchedProducts:
+  - text: Which products do you want to inquire about? (Please write only letters
+      and at least 3)
+ 
+  utter_askAdditionalHelp:
+  - buttons:
+    - payload: /choice_additionalHelp
+      title: I need more help
+    - payload: /choice_noMoreHelp
+      title: I don't need help anymore
+    text: Do you need more help?
+
+  utter_additional_help:
+  - text: Do you need more help?
+    
+  # utter_ask_suggestedProduct:
+  # - text: What would make you happy?
+  
+  utter_bot_challenge:
+  - text: I am a eAssistant, sami's official chatbot! I was developed by Samuel Nwabuike
+      and powered by Rasa.
+  utter_chitchat/ask_name:
+  - text: I am called eAssistant!
+  utter_chitchat/ask_how_you_are:
+  - text: I am fine thank you for asking!
+  utter_chitchat/ask_languages_bot:
+  - text: I only speak and understand English for the moment, but I will learn French
+      in the near future.
+  utter_chitchat/ask_time:
+  - text: It is the time it was yesterday at the same hour ;)
+  utter_out_of_scope/non_english:
+  - text: I only understand English, I'm sorry.
+  utter_out_of_scope/other:
+  - text: I can't help you with that, I'm sorry.
+  - text: I was not designed to answer this question.
+  - text: This is out of my area of expertise.
+  - text: I'm sorry I can't help you on this one.
+  - text: I'd rather you ask me something else.
+  - text: I don't have an opinion on this subject...
+
+  utter_rephrase:
+  - text: Please, rephrase your sentence, I'm not sure I understood.
+
+  utter_ask_stock_amount:
+  - text: How many would you like to get?
+
+  utter_ask_groceries :
+  - text: What would you like to get? (Product Name Only) # For an efficient response, please reply with just the product's name.
+
+
+actions:
+- action_check_availability
+- action_confirm_request
+- action_recommend_product
+- validate_searchedProducts_form
+- action_selectProductInformation
+- action_insertNewProductSuggestion
+
+forms:
+  productRequest_form:
+    groceries:
+    - type: from_text
+      intent: groceries
+    stock_amount: 
+    - type: from_text
+#   productSuggestion_form:
+#     suggestedProduct:
+#     - type: from_text
+#   searchedProducts_form:
+#     searchedProducts:
+#     - type: from_text
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

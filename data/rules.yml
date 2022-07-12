@@ -1,0 +1,90 @@
+version: "2.0"
+
+rules:
+
+# - rule: buy
+#   steps:
+#   - intent: buy
+#   - action: utter_successful_purchase
+
+# - rule: add_to_cart
+#   steps:
+#   - intent: add_to_cart
+#   - action: utter_added_to_cart
+
+# - rule: form after intent(groceries)
+#   steps:
+#   - intent: groceries
+#   - action: productRequest_form
+#   - active_loop: productRequest_form
+#   - active_loop: null
+
+- rule: goodbye after deny additional help
+  steps:
+  - action: utter_additional_help
+  - intent: deny
+  - action: utter_goodbye
+
+
+# - rule: Request form after greet
+#   steps:
+#   - intent: greet
+#   - action: utter_welcome
+#   - action: productRequest_form
+#   - active_loop: productRequest_form
+#   # - active_loop: null
+  # - action: action_check_availability
+  # - slot_was_set: 
+  #   - product_available: false
+
+- rule: Say "I am a bot" anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_bot_challenge
+
+# - rule: start again from additional help
+#   steps:
+#   - action: utter_additional_help
+#   - intent: affirm
+#   - action: utter_welcome
+  #- action: utter_ask_groceries
+
+- rule: Respond to Goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Respond to chitchat
+  steps:
+  - intent: chitchat
+  - action: utter_chitchat
+  # - action: utter_askAdditionalHelp
+  - action: utter_additional_help
+
+- rule: Respond to out_of_scope
+  steps:
+  - intent: out_of_scope
+  - action: utter_out_of_scope
+  # - action: utter_askAdditionalHelp
+  - action: utter_additional_help
+
+- rule: Ask the user to rephrase in case of low NLU confidence
+  steps:
+  - intent: nlu_fallback
+  - action: utter_rephrase
+
+# - rule: Respond to FAQs (from happy path 1)
+#   steps:
+#   - intent: faq
+#   - action: utter_faq
+#   - action: utter_askAdditionalHelp
+
+# - rule: Say goodbye anytime the user says goodbye
+#   steps:
+#   - intent: goodbye
+#   - action: utter_goodbye
+
+# - rule: Say 'I am a bot' anytime the user challenges
+#   steps:
+#   - intent: bot_challenge
+#   - action: utter_iamabot

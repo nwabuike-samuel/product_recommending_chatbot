@@ -1,0 +1,216 @@
+version: "2.0"
+
+stories:
+
+- story: Happy path - Reply user request then recommend product
+  steps:
+  - intent: greet
+  - action: utter_welcome
+  #- action: utter_ask_groceries
+  #- intent: groceries
+  - action: productRequest_form
+  - active_loop: productRequest_form
+  - active_loop: null
+  - action: action_check_availability
+  - slot_was_set: 
+    - product_available: true
+  - action: action_confirm_request
+  - intent: add_to_cart
+  - action: utter_added_to_cart
+  - intent: buy
+  - action: utter_successful_purchase  
+  - action: action_recommend_product
+  - intent: express_gratitude
+  - action: utter_youre_welcome
+  #- action: utter_askAdditionalHelp
+  - action: utter_additional_help
+  - intent: affirm
+  - action: utter_welcome
+
+- story: Sad path - Reply user request (not available) then recommend product
+  steps:
+  - intent: greet
+  - action: utter_welcome
+  #- action: utter_ask_groceries
+  #- intent: groceries
+  - action: productRequest_form
+  - active_loop: productRequest_form
+  - active_loop: null
+  - action: action_check_availability
+  - slot_was_set: 
+    - product_available: false
+  - action: utter_action_out_of_stock
+  - action: utter_action_recommend_product
+  #- action: action_recommend_product
+  - intent: express_gratitude
+  - action: utter_youre_welcome
+  #- action: utter_askAdditionalHelp
+  - action: utter_additional_help
+  - intent: deny
+  - action: utter_goodbye
+
+- story: Request form after greet
+  steps:
+  - intent: greet
+  - action: utter_welcome
+  - action: productRequest_form
+  - active_loop: productRequest_form
+  - active_loop: null
+  - action: action_check_availability
+
+- story: form after intent(groceries) - sad path
+  steps:
+  - intent: groceries
+  - action: productRequest_form
+  - active_loop: productRequest_form
+  - active_loop: null
+  - action: action_check_availability
+  - slot_was_set: 
+    - product_available: false
+  - action: utter_action_out_of_stock
+  - action: utter_action_recommend_product
+  #- action: action_recommend_product
+  - intent: express_gratitude
+  - action: utter_youre_welcome
+
+- story: form after intent(groceries) - happy path
+  steps:
+  - intent: groceries
+  - action: productRequest_form
+  - active_loop: productRequest_form
+  - active_loop: null
+  - action: action_check_availability
+  - slot_was_set: 
+    - product_available: true
+  - action: action_confirm_request
+  - intent: add_to_cart
+  - action: utter_added_to_cart
+  - intent: buy
+  - action: utter_successful_purchase
+  - action: action_recommend_product
+  - action: utter_action_recommend_product
+  #- action: action_recommend_product
+  - intent: express_gratitude
+  - action: utter_youre_welcome
+
+# - story: buy
+#   steps:
+#   - intent: buy
+#   - action: utter_successful_purchase
+
+# - story: add_to_cart
+#   steps:
+#   - intent: add_to_cart
+#   - action: utter_added_to_cart
+
+- story: faq path
+  steps:
+  - intent: faq
+  - action: utter_faq
+  - intent: express_gratitude
+  - action: utter_youre_welcome
+  - action: utter_additional_help
+  #- action: utter_askAdditionalHelp
+
+# - story: Happy path 1 - Inform me about eCommerce
+#   steps:
+#   - intent: greet
+#   - action: utter_welcome
+#   - action: utter_howCanIhelpYou
+#   - intent: choice_inform_about_eCommerce
+#   - action: utter_inform_about_eCommerce
+#   - intent: faq
+#   - action: utter_faq
+#   - action: utter_askAdditionalHelp
+
+# - story: Happy path 2 - Inform about a particular product
+#   steps:
+#   - intent: choice_inform_about_product
+#   - action: searchedProducts_form
+#   - active_loop: searchedProducts_form
+#   - active_loop: null
+#   - action: action_selectProductInformation
+#   - action: utter_askAdditionalHelp
+
+# - story: Happy path 5 - Suggest a product
+#   steps:
+#   - intent: choice_suggest_product
+#   - action: productSuggestion_form
+#   - active_loop: productSuggestion_form
+#   - active_loop: null
+#   - action: action_insertNewProductSuggestion
+#   - action: utter_askAdditionalHelp
+
+# - story: Happy path 1 [v2] - Inform me about eCommerce [After being asked for additional help]
+#   steps:
+#   - intent: choice_additionalHelp
+#   - action: utter_howCanIhelpYou
+#   - intent: choice_inform_about_eCommerce
+#   - action: utter_inform_about_eCommerce
+#   - intent: faq
+#   - action: utter_faq
+#   - action: utter_askAdditionalHelp
+# - story: Happy path 2 [v2] - Inform about a particular product [After being asked for additional help]
+#   steps:
+#   - intent: choice_additionalHelp
+#   - action: utter_howCanIhelpYou
+#   - intent: choice_inform_about_product
+#   - action: searchedProducts_form
+#   - active_loop: searchedProducts_form
+#   - active_loop: null
+#   - action: action_selectProductInformation
+#   - action: utter_askAdditionalHelp
+# - story: Happy path 5 [v2] - Suggest a product [After being asked for additional help]
+#   steps:
+#   - intent: choice_additionalHelp
+#   - action: utter_howCanIhelpYou
+#   - intent: choice_suggest_product
+#   - action: productSuggestion_form
+#   - active_loop: productSuggestion_form
+#   - active_loop: null
+#   - action: action_insertNewProductSuggestion
+#   - action: utter_askAdditionalHelp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# - story: happy path
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: mood_great
+#   - action: utter_happy
+
+# - story: sad path 1
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: mood_unhappy
+#   - action: utter_cheer_up
+#   - action: utter_did_that_help
+#   - intent: affirm
+#   - action: utter_happy
+
+# - story: sad path 2
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - intent: mood_unhappy
+#   - action: utter_cheer_up
+#   - action: utter_did_that_help
+#   - intent: deny
+#   - action: utter_goodbye
